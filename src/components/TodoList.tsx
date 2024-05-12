@@ -1,14 +1,9 @@
 import Grid from "@mui/material/Unstable_Grid2";
-import { Box, Input, Typography } from "@mui/material";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import useTodoStore from "../store/todoStore";
+import { Typography } from "@mui/material";
 import ModalAddTodoList from "./ModalAddTodoList";
+// import Taps from "./Taps";
 
 const TodoList = () => {
-  const ariaLabel = { "aria-label": "description" };
-
-  const openModal = useTodoStore((state) => state.openModal);
-
   return (
     <Grid
       container
@@ -39,43 +34,6 @@ const TodoList = () => {
         >
           My To-do List
         </Typography>
-      </Grid>
-
-      <Grid xs={12}>
-        <Box
-          sx={{ display: "flex", alignItems: "center", position: "relative" }}
-        >
-          <Input
-            placeholder="Add new to-do lists"
-            inputProps={ariaLabel}
-            fullWidth
-            sx={{ height: "40px", paddingLeft: "40px" }}
-          />
-          <ListAltIcon
-            sx={{
-              color: "action.active",
-              mr: 1,
-              my: 0.5,
-              position: "absolute",
-              left: "5px",
-            }}
-          />
-        </Box>
-      </Grid>
-
-      <Grid
-        sx={{
-          bgcolor: "rgba(221,221,221,0.30)",
-          height: "150px",
-          borderRadius: "4px",
-          padding: "0px",
-          margin: "0px 8px",
-          boxShadow: "5px 5px 12px 1px rgba(0,0,0,0.10)",
-        }}
-        xs={6}
-        onClick={openModal}
-      >
-        +
       </Grid>
 
       {/* <Taps /> */}
