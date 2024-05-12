@@ -10,17 +10,21 @@ interface TodoItem {
 
 interface TodoItemsState {
   items: TodoItem[];
+  open: boolean;
   add: (itemTodo: TodoItem) => void;
   delete: (id: number) => void;
   checked: (id: number) => void;
   unChecked: (id: number) => void;
+  openModal: () => void;
 }
 
-export const todoStore = create<TodoItemsState>()(
+const useTodoStore = create<TodoItemsState>()(
   devtools(
     persist(
       (set) => ({
         items: [{ id: 0, name: "test", description: "test", completed: false }],
+        open: false,
+
         add: (todoItem) =>
           set((state) => ({ items: [...state.items, todoItem] })),
 
@@ -60,9 +64,13 @@ export const todoStore = create<TodoItemsState>()(
               return { items: [...state.items] };
             }
           }),
+
+        openModal: () => set((state) => ({ open: !state.open })),
       }),
 
       { name: "todoItems" }
     )
   )
 );
+
+export default useTodoStore;
