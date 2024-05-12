@@ -1,12 +1,10 @@
-import { Typography, Grid } from "@mui/material";
 import ModalAddTodoList from "./ModalAddTodoList";
 import Taps from "./Taps";
 
 const TodoList = () => {
   return (
-    <Grid
-      container
-      sx={{
+    <div
+      style={{
         width: "100%",
         height: "500px",
         maxWidth: "700px",
@@ -14,12 +12,10 @@ const TodoList = () => {
         borderRadius: "4px",
         boxShadow: "0px 0px 8px rgba(19,101,239,0.3)",
       }}
-      spacing={0}
     >
-      <Grid xs={12}>
-        <Typography
-          variant="h1"
-          sx={{
+      <div>
+        <p
+          style={{
             // backgroundColor: "red",
             padding: "30px 0",
             textAlign: "center",
@@ -32,13 +28,13 @@ const TodoList = () => {
           }}
         >
           My To-do List
-        </Typography>
-      </Grid>
+        </p>
+      </div>
 
       <Taps />
 
       <ModalAddTodoList />
-    </Grid>
+    </div>
   );
 };
 
