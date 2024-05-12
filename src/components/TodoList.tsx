@@ -3,16 +3,7 @@ import Taps from "./Taps";
 
 const TodoList = () => {
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "500px",
-        maxWidth: "700px",
-        margin: "auto",
-        borderRadius: "4px",
-        boxShadow: "0px 0px 8px rgba(19,101,239,0.3)",
-      }}
-    >
+    <div className="w-full h-[500px] max-w-[700px] m-auto rounded shadow-blueShadow bg-red-400">
       <div>
         <p
           style={{
