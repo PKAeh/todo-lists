@@ -1,7 +1,6 @@
-import Grid from "@mui/material/Unstable_Grid2";
-import { Typography } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import ModalAddTodoList from "./ModalAddTodoList";
-// import Taps from "./Taps";
+import Taps from "./Taps";
 
 const TodoList = () => {
   return (
@@ -36,7 +35,7 @@ const TodoList = () => {
         </Typography>
       </Grid>
 
-      {/* <Taps /> */}
+      <Taps />
 
       <ModalAddTodoList />
     </Grid>
