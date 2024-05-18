@@ -8,39 +8,29 @@ interface TabAllPageProps {
 }
 
 const TabAllPage = ({ isActiveTab, items }: TabAllPageProps) => {
+  const isEvenIndex = (index: number) => (index + 1) % 2 === 0;
+
   return (
     <TabContent isActiveTab={isActiveTab}>
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-col gap-2">
           {items
-            ?.filter((_, index) => {
-              const newIndex = index + 1;
-              return newIndex % 2 === 1;
-            })
-            ?.map((item, index) => {
-              return (
-                <div key={`${item?.id}${index}`}>
-                  <CardItem item={item} />
-                </div>
-              );
-            })}
+            .filter((_, index) => !isEvenIndex(index))
+            .map((item, index) => (
+              <div key={item.id + index}>
+                <CardItem item={item} />
+              </div>
+            ))}
         </div>
 
         <div className="flex flex-col gap-2">
           {items
-            ?.filter((_, index) => {
-              {
-                const newIndex = index + 1;
-                return newIndex % 2 === 0;
-              }
-            })
-            ?.map((item, index) => {
-              return (
-                <div key={`${item?.id}${index}`}>
-                  <CardItem item={item} />
-                </div>
-              );
-            })}
+            .filter((_, index) => isEvenIndex(index))
+            .map((item, index) => (
+              <div key={item.id + index}>
+                <CardItem item={item} />
+              </div>
+            ))}
         </div>
       </div>
     </TabContent>

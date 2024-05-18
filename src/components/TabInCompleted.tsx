@@ -8,40 +8,30 @@ interface TabInCompletedProps {
 }
 
 const TabInCompleted = ({ isActiveTab, items }: TabInCompletedProps) => {
+  const notCompletedItems = items.filter(({ completed }) => !completed);
+  const oddItems = notCompletedItems.filter(
+    (_, index) => (index + 1) % 2 !== 0
+  );
+  const evenItems = notCompletedItems.filter(
+    (_, index) => (index + 1) % 2 === 0
+  );
+
   return (
     <TabContent isActiveTab={isActiveTab}>
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-col gap-2">
-          {items
-            ?.filter((item) => !item?.completed)
-            ?.filter((_, index) => {
-              const newIndex = index + 1;
-              return newIndex % 2 === 1;
-            })
-            ?.map((item, index) => {
-              return (
-                <div key={`${item?.id}${index}`}>
-                  <CardItem item={item} />
-                </div>
-              );
-            })}
+          {oddItems.map(({ id, name, description, completed }, index) => (
+            <div key={`${id}${index}`}>
+              <CardItem item={{ id, name, description, completed }} />
+            </div>
+          ))}
         </div>
         <div className="flex flex-col gap-2">
-          {items
-            ?.filter((item) => !item?.completed)
-            ?.filter((_, index) => {
-              {
-                const newIndex = index + 1;
-                return newIndex % 2 === 0;
-              }
-            })
-            ?.map((item, index) => {
-              return (
-                <div key={`${item?.id}${index}`}>
-                  <CardItem item={item} />
-                </div>
-              );
-            })}
+          {evenItems.map(({ id, name, description, completed }, index) => (
+            <div key={`${id}${index}`}>
+              <CardItem item={{ id, name, description, completed }} />
+            </div>
+          ))}
         </div>
       </div>
     </TabContent>
