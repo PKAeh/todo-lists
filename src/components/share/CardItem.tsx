@@ -13,8 +13,6 @@ const CardItem = ({ item }: CardItemProps) => {
   const toggleChecked = useTodoStore((state) => state.toggleChecked);
   const deleteItem = useTodoStore((state) => state.deleteItem);
 
-  console.log({ item });
-
   return (
     <div
       className="relative flex gap-3 p-4 rounded-lg min-h-[56px] shadow-primaryShadow"

@@ -10,20 +10,39 @@ const ModalAddTodoList = () => {
     nameItem: "",
     description: "",
   });
+  const [openDialog, setOpenDialog] = useState(false);
+  const [isErrorRequired, setIsErrorRequired] = useState(false);
+
+  const clearForm = () => {
+    setItem({ nameItem: "", description: "" });
+    setIsErrorRequired(false);
+  };
 
   const onClick = () => {
-    add({
-      id: lastedId + 1,
-      name: item.nameItem,
-      description: item.description,
-      completed: false,
-    });
-    setLastedId(lastedId + 1);
+    if (item.nameItem) {
+      add({
+        id: lastedId + 1,
+        name: item.nameItem,
+        description: item.description,
+        completed: false,
+      });
+      setLastedId(lastedId + 1);
+      setOpenDialog(false);
+
+      setTimeout(() => {
+        clearForm();
+      }, 100);
+    } else {
+      setIsErrorRequired(true);
+    }
   };
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>
+    <Dialog.Root
+      open={openDialog}
+      onOpenChange={() => setItem({ nameItem: "", description: "" })}
+    >
+      <Dialog.Trigger asChild onClick={() => setOpenDialog(true)}>
         <div className="flex gap-1 items-center p-[6px] cursor-pointer rounded-lg text-gray-500 hover:!text-[#4ba8ff]/80">
           <p className="text-sm">New Lists</p>
           <Icon path={mdiListBoxOutline} size={1} />
@@ -32,7 +51,13 @@ const ModalAddTodoList = () => {
 
       {/* Open modal */}
       <Dialog.Portal>
-        <Dialog.Overlay className="bg-slate-400/50 data-[state=open]:animate-overlayShow fixed inset-0 z-10" />
+        <Dialog.Overlay
+          className="bg-slate-400/50 data-[state=open]:animate-overlayShow fixed inset-0 z-10"
+          onClick={() => {
+            setOpenDialog(false);
+            clearForm();
+          }}
+        />
         <Dialog.Content className="data-[state=open]:animate-contentShow fixed z-20 top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-5 pb-3 shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
           <Dialog.Title className="text-mauve12 m-0 text-lg font-medium">
             New Item
@@ -46,10 +71,19 @@ const ModalAddTodoList = () => {
                 Name Item
               </label>
               <input
-                className="input input-bordered w-full h-10 p-2 placeholder:text-sm hover:!border-[#4ba8ff] focus:!border-[#4ba8ff] focus:!outline-[#4ba8ff]"
+                className={`input input-bordered w-full h-10 p-2 placeholder:text-sm focus:!border-[#4ba8ff] focus:!outline-[#4ba8ff] ${
+                  isErrorRequired
+                    ? "input-error outline outline-2 outline-offset-2 !outline-red-500"
+                    : "hover:!border-[#4ba8ff]"
+                }`}
                 id="name"
-                placeholder="Name Item"
+                placeholder="Name Item *"
                 onChange={(e) => setItem({ ...item, nameItem: e.target.value })}
+                onBlur={() => {
+                  if (item.nameItem.length > 0) {
+                    setIsErrorRequired(false);
+                  }
+                }}
               />
             </fieldset>
             <fieldset className="flex items-start gap-2">
@@ -71,14 +105,12 @@ const ModalAddTodoList = () => {
           </div>
 
           <div className="mt-3 flex justify-end">
-            <Dialog.Close asChild>
-              <button
-                className="btn min-h-0 text-sm text-gray-600 bg-transparent border-transparent hover:bg-transparent hover:border-transparent hover:text-[#4ba8ff] inline-flex h-9 items-center justify-center rounded-[4px] px-4 font-medium leading-none focus:outline-none shadow-none"
-                onClick={onClick}
-              >
-                Save
-              </button>
-            </Dialog.Close>
+            <button
+              className="btn min-h-0 text-sm text-gray-600 bg-transparent border-transparent hover:bg-transparent hover:border-transparent hover:text-[#4ba8ff] inline-flex h-9 items-center justify-center rounded-[4px] px-4 font-medium leading-none focus:outline-none shadow-none"
+              onClick={onClick}
+            >
+              Save
+            </button>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
