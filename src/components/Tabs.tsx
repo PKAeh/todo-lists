@@ -3,7 +3,9 @@ import { useState } from "react";
 
 import useTodoStore from "@/store/todoStore";
 import ModalAddTodoList from "@/components/ModalAddTodoList";
-import CardItem from "@/components/share/CardItem";
+import TabAllPage from "./TabAllPage";
+import TabCompleted from "./TabCompleted";
+import TabInCompleted from "./TabInCompleted";
 
 interface MenuTabsProps {
   name: string;
@@ -41,121 +43,17 @@ const Tabs = () => {
 
       {/* display all data to do list*/}
       {isActiveTab === 0 && (
-        <TabContent isActiveTab={isActiveTab}>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex flex-col gap-2">
-              {items
-                ?.filter((_, index) => {
-                  const newIndex = index + 1;
-                  return newIndex % 2 === 1;
-                })
-                ?.map((item, index) => {
-                  return (
-                    <div key={`${item?.id}${index}`}>
-                      <CardItem item={item} />
-                    </div>
-                  );
-                })}
-            </div>
-
-            <div className="flex flex-col gap-2">
-              {items
-                ?.filter((_, index) => {
-                  {
-                    const newIndex = index + 1;
-                    return newIndex % 2 === 0;
-                  }
-                })
-                ?.map((item, index) => {
-                  return (
-                    <div key={`${item?.id}${index}`}>
-                      <CardItem item={item} />
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </TabContent>
+        <TabAllPage isActiveTab={isActiveTab} items={items} />
       )}
 
       {/* display completed data to do list*/}
       {isActiveTab === 1 && (
-        <TabContent isActiveTab={isActiveTab}>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex flex-col gap-2">
-              {items
-                ?.filter((item) => item?.completed)
-                ?.filter((_, index) => {
-                  const newIndex = index + 1;
-                  return newIndex % 2 === 1;
-                })
-                ?.map((item, index) => {
-                  return (
-                    <div key={`${item?.id}${index}`}>
-                      <CardItem item={item} />
-                    </div>
-                  );
-                })}
-            </div>
-            <div className="flex flex-col gap-2">
-              {items
-                ?.filter((item) => item?.completed)
-                ?.filter((_, index) => {
-                  {
-                    const newIndex = index + 1;
-                    return newIndex % 2 === 0;
-                  }
-                })
-                ?.map((item, index) => {
-                  return (
-                    <div key={`${item?.id}${index}`}>
-                      <CardItem item={item} />
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </TabContent>
+        <TabCompleted isActiveTab={isActiveTab} items={items} />
       )}
 
       {/* display inCompleted data to do list*/}
       {isActiveTab === 2 && (
-        <TabContent isActiveTab={isActiveTab}>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex flex-col gap-2">
-              {items
-                ?.filter((item) => !item?.completed)
-                ?.filter((_, index) => {
-                  const newIndex = index + 1;
-                  return newIndex % 2 === 1;
-                })
-                ?.map((item, index) => {
-                  return (
-                    <div key={`${item?.id}${index}`}>
-                      <CardItem item={item} />
-                    </div>
-                  );
-                })}
-            </div>
-            <div className="flex flex-col gap-2">
-              {items
-                ?.filter((item) => !item?.completed)
-                ?.filter((_, index) => {
-                  {
-                    const newIndex = index + 1;
-                    return newIndex % 2 === 0;
-                  }
-                })
-                ?.map((item, index) => {
-                  return (
-                    <div key={`${item?.id}${index}`}>
-                      <CardItem item={item} />
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </TabContent>
+        <TabInCompleted isActiveTab={isActiveTab} items={items} />
       )}
     </div>
   );
@@ -185,7 +83,7 @@ const MenuTabs = ({ name, onClick, isActiveTab, index }: MenuTabsProps) => {
   );
 };
 
-const TabContent = ({ children, isActiveTab }: TabContent) => {
+export const TabContent = ({ children, isActiveTab }: TabContent) => {
   return (
     <div
       role="tabpanel"
