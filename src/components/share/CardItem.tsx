@@ -1,18 +1,26 @@
+import { useState } from "react";
 import clsx from "clsx";
 import useTodoStore, { TodoItem } from "@/store/todoStore";
+import Icon from "@mdi/react";
+import { mdiDeleteOutline } from "@mdi/js";
 
 interface CardItemProps {
   item: TodoItem;
 }
 
 const CardItem = ({ item }: CardItemProps) => {
+  const [isHoverCard, setIsHoverCard] = useState(false);
   const toggleChecked = useTodoStore((state) => state.toggleChecked);
-  //   const deleteItem = useTodoStore((state) => state.deleteItem);
+  const deleteItem = useTodoStore((state) => state.deleteItem);
 
   console.log({ item });
 
   return (
-    <div className="flex gap-3 p-4 rounded-lg shadow-primaryShadow">
+    <div
+      className="relative flex gap-3 p-4 rounded-lg min-h-[56px] shadow-primaryShadow"
+      onMouseEnter={() => setIsHoverCard(true)}
+      onMouseLeave={() => setIsHoverCard(false)}
+    >
       <label className="flex cursor-pointer pt-[2px]">
         <input
           type="checkbox"
@@ -25,7 +33,7 @@ const CardItem = ({ item }: CardItemProps) => {
       </label>
       <div className="flex flex-col grow">
         <span
-          className={`text-lg font-semibold leading-none w-full break-all  ${clsx(
+          className={`text-lg font-semibold leading-none w-full break-all cursor-default ${clsx(
             {
               "line-through text-gray-400": item?.completed,
             }
@@ -33,10 +41,24 @@ const CardItem = ({ item }: CardItemProps) => {
         >
           {item?.name}
         </span>
-        <span className="text-xs text-gray-400 w-full">
+        <span className="text-xs text-gray-400 w-full break-all cursor-default">
           {item?.description}
         </span>
       </div>
+
+      {/* delete button */}
+      {isHoverCard && (
+        <button
+          className="btn absolute right-4 top-4 w-6 h-6 min-h-0 min-w-0 p-0 rounded bg-red-50 border-red-50 hover:bg-red-100 hover:border-red-100"
+          onClick={() => deleteItem(item?.id)}
+        >
+          <Icon
+            path={mdiDeleteOutline}
+            size={1}
+            className="!w-4 !h-4 max-w-[1rem] text-red-500"
+          />
+        </button>
+      )}
     </div>
   );
 };

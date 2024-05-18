@@ -30,12 +30,12 @@ const useTodoStore = create<TodoItemsState>()(
         deleteItem: (id) =>
           set((state) => {
             const itemIndex = state.items.findIndex((item) => item.id === id);
-            const items =
-              itemIndex !== -1
-                ? state.items.splice(itemIndex, 1)
-                : [...state.items];
-
-            return { items };
+            if (itemIndex !== -1) {
+              state.items.splice(itemIndex, 1);
+              return { items: [...state.items] };
+            } else {
+              return { items: [...state.items] };
+            }
           }),
 
         toggleChecked: (id) =>

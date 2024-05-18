@@ -73,7 +73,7 @@ const ModalAddTodoList = () => {
           <div className="mt-3 flex justify-end">
             <Dialog.Close asChild>
               <button
-                className="text-sm text-gray-600 hover:text-[#4ba8ff] hover:bg-green5 focus:shadow-green7 inline-flex h-9 items-center justify-center rounded-[4px] px-4 font-medium leading-none focus:shadow-[0_0_0_2px_rgba(75,168,255,1)] focus:outline-none"
+                className="btn min-h-0 text-sm text-gray-600 bg-transparent border-transparent hover:bg-transparent hover:border-transparent hover:text-[#4ba8ff] inline-flex h-9 items-center justify-center rounded-[4px] px-4 font-medium leading-none focus:outline-none shadow-none"
                 onClick={onClick}
               >
                 Save
