@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-interface TodoItem {
+export interface TodoItem {
   id: number;
   name: string;
   description: string;
@@ -11,9 +11,8 @@ interface TodoItem {
 interface TodoItemsState {
   items: TodoItem[];
   add: (itemTodo: TodoItem) => void;
-  delete: (id: number) => void;
-  checked: (id: number) => void;
-  unChecked: (id: number) => void;
+  deleteItem: (id: number) => void;
+  toggleChecked: (id: number) => void;
   lastedId: number;
   setLastedId: (id: number) => void;
 }
@@ -22,13 +21,13 @@ const useTodoStore = create<TodoItemsState>()(
   devtools(
     persist(
       (set) => ({
-        items: [{ id: 0, name: "test", description: "test", completed: false }],
+        items: [],
         lastedId: 0,
 
         add: (todoItem) =>
           set((state) => ({ items: [...state.items, todoItem] })),
 
-        delete: (id) =>
+        deleteItem: (id) =>
           set((state) => {
             const itemIndex = state.items.findIndex((item) => item.id === id);
             const items =
@@ -39,27 +38,14 @@ const useTodoStore = create<TodoItemsState>()(
             return { items };
           }),
 
-        checked: (id) =>
+        toggleChecked: (id) =>
           set((state) => {
             const itemIndex = state.items.findIndex((item) => item.id === id);
-            if (itemIndex === -1) {
+            if (itemIndex !== -1) {
               const item = state.items[itemIndex];
-              item.completed = true;
-              const items = state.items.splice(itemIndex, 1, { ...item });
-              return { items };
-            } else {
+              item.completed = !item.completed;
+              state.items.splice(itemIndex, 1, { ...item });
               return { items: [...state.items] };
-            }
-          }),
-
-        unChecked: (id) =>
-          set((state) => {
-            const itemIndex = state.items.findIndex((item) => item.id === id);
-            if (itemIndex === -1) {
-              const item = state.items[itemIndex];
-              item.completed = false;
-              const items = state.items.splice(itemIndex, 1, { ...item });
-              return { items };
             } else {
               return { items: [...state.items] };
             }

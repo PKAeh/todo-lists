@@ -1,4 +1,4 @@
-import useTodoStore from "../store/todoStore";
+import useTodoStore from "@/store/todoStore";
 import * as Dialog from "@radix-ui/react-dialog";
 import Icon from "@mdi/react";
 import { mdiListBoxOutline } from "@mdi/js";

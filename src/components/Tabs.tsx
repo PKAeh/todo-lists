@@ -1,6 +1,9 @@
 import clsx from "clsx";
 import { useState } from "react";
-import ModalAddTodoList from "./ModalAddTodoList";
+
+import useTodoStore from "@/store/todoStore";
+import ModalAddTodoList from "@/components/ModalAddTodoList";
+import CardItem from "@/components/share/CardItem";
 
 interface MenuTabsProps {
   name: string;
@@ -16,6 +19,7 @@ interface TabContent {
 
 const Tabs = () => {
   const [isActiveTab, setActiveTab] = useState(0);
+  const { items } = useTodoStore();
   return (
     <div className="flex flex-col h-full">
       <Tab>
@@ -37,25 +41,45 @@ const Tabs = () => {
 
       {isActiveTab === 0 && (
         <TabContent isActiveTab={isActiveTab}>
-          <p>Content 1</p>
-          <p>Content 1</p>
-          <p>Content 1</p>
-          <p>Content 1</p>
-          <p>Content 1</p>
-          <p>Content 1</p>
-          <p>Content 1</p>
-          <p>Content 1</p>
-          <p>Content 1</p>
+          <div className="grid grid-cols-2 gap-2">
+            {items?.map((item, index) => {
+              return (
+                <div key={`${item?.id}${index}`}>
+                  <CardItem item={item} />
+                </div>
+              );
+            })}
+          </div>
         </TabContent>
       )}
       {isActiveTab === 1 && (
         <TabContent isActiveTab={isActiveTab}>
-          <p>Content 2</p>
+          <div className="grid grid-cols-2 gap-2">
+            {items
+              ?.filter((item) => item?.completed)
+              .map((item, index) => {
+                return (
+                  <div key={`${item?.id}${index}`}>
+                    <CardItem item={item} />
+                  </div>
+                );
+              })}
+          </div>
         </TabContent>
       )}
       {isActiveTab === 2 && (
         <TabContent isActiveTab={isActiveTab}>
-          <p>Content 3</p>
+          <div className="grid grid-cols-2 gap-2">
+            {items
+              ?.filter((item) => !item?.completed)
+              .map((item, index) => {
+                return (
+                  <div key={`${item?.id}${index}`}>
+                    <CardItem item={item} />
+                  </div>
+                );
+              })}
+          </div>
         </TabContent>
       )}
     </div>
