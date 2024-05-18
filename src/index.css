@@ -8,7 +8,7 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 16px;
 }
 
 /* Track */
@@ -21,6 +21,7 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #7aafff;
   border-radius: 100vh;
+  border: 6px solid white;
 }
 
 /* Handle on hover */
