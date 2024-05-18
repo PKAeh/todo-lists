@@ -7,6 +7,7 @@ export default {
     extend: {
       boxShadow: {
         blueShadow: "0px 0px 8px rgba(19,101,239,0.3)",
+        primaryShadow: "0px 0px 8px rgba(19,101,239,0.3)",
       },
     },
   },
