@@ -1,20 +1,25 @@
-// import useTodoStore from "../store/todoStore";
+import useTodoStore from "../store/todoStore";
 import * as Dialog from "@radix-ui/react-dialog";
 import Icon from "@mdi/react";
 import { mdiListBoxOutline } from "@mdi/js";
 import { useState } from "react";
 
 const ModalAddTodoList = () => {
+  const { add, lastedId, setLastedId } = useTodoStore();
   const [item, setItem] = useState({
     nameItem: "",
     description: "",
   });
 
-  console.log({ item });
-
-  //   const onClick = () => {
-  //     useTodoStore.
-  //   }
+  const onClick = () => {
+    add({
+      id: lastedId + 1,
+      name: item.nameItem,
+      description: item.description,
+      completed: false,
+    });
+    setLastedId(lastedId + 1);
+  };
 
   return (
     <Dialog.Root>
@@ -67,7 +72,10 @@ const ModalAddTodoList = () => {
 
           <div className="mt-3 flex justify-end">
             <Dialog.Close asChild>
-              <button className="text-sm text-gray-600 hover:text-[#4ba8ff] hover:bg-green5 focus:shadow-green7 inline-flex h-9 items-center justify-center rounded-[4px] px-4 font-medium leading-none focus:shadow-[0_0_0_2px_rgba(75,168,255,1)] focus:outline-none">
+              <button
+                className="text-sm text-gray-600 hover:text-[#4ba8ff] hover:bg-green5 focus:shadow-green7 inline-flex h-9 items-center justify-center rounded-[4px] px-4 font-medium leading-none focus:shadow-[0_0_0_2px_rgba(75,168,255,1)] focus:outline-none"
+                onClick={onClick}
+              >
                 Save
               </button>
             </Dialog.Close>
